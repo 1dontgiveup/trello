@@ -1,4 +1,4 @@
-import { ManyToOne, BaseEntity, CreateDateColumn, Column, Entity, Unique, OneToMany, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { ManyToOne, BaseEntity, UpdateDateColumn, CreateDateColumn, Column, Entity, Unique, OneToMany, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 import { Comments } from '../Comments/comments.entity'
 import { Lists } from '../Lists/lists.entity'
 
@@ -11,6 +11,9 @@ export class Cards extends BaseEntity{
 
     @Column()
     lid: number;
+
+    @Column()
+    mid: number;
 
     @Column()
     title: string;
@@ -30,7 +33,7 @@ export class Cards extends BaseEntity{
     @CreateDateColumn()
     createdAt: Date;
 
-    @CreateDateColumn()
+    @UpdateDateColumn()
     updatedAt: Date;
 
     // 관계설정 따로 수정해주셔야 합니다.

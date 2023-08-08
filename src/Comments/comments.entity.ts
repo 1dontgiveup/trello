@@ -1,4 +1,4 @@
-import { BaseEntity, CreateDateColumn, ManyToOne, Column, Entity, Unique, OneToMany, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, CreateDateColumn, UpdateDateColumn, ManyToOne, Column, Entity, Unique, OneToMany, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 import { Cards } from '../Cards/cards.entity'
 
 @Entity()
@@ -12,12 +12,15 @@ export class Comments extends BaseEntity{
     cid: number;
 
     @Column()
+    mid: number;
+    
+    @Column()
     comment: string;
 
     @CreateDateColumn()
     createdAt: Date;
 
-    @CreateDateColumn()
+    @UpdateDateColumn()
     updatedAt: Date;
 
     // 관계설정 따로 수정해주셔야 합니다.
