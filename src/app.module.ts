@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { typeORMConfig } from './configs/typeorm.config.service';
+import { typeORMConfig } from './configs/typeorm.config';
 import { BoardsModule } from './Boards/boards.module';
 import { CardsModule } from './Cards/cards.module';
 import { CommentsModule } from './Comments/comments.module';
@@ -11,12 +11,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true }),
-    TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
-      useClass: typeORMConfig,
-      inject: [ConfigService],
-    }),
+    TypeOrmModule.forRoot(typeORMConfig),
     BoardsModule,
     CardsModule,
     CommentsModule,
