@@ -31,13 +31,13 @@ export class Users extends BaseEntity{
     @DeleteDateColumn()
     deletedAt: Date | null;
 
-    // 관계설정 따로 수정해주셔야 합니다.
-    // Users-Members : 1:N 관계
-    // @OneToMany(type => Members, board => Members.user, {eager: true})
+    // // Relationship
+    // // Users-Members : 1:N 관계
+    // @OneToMany(() => Members, members => members.users)
     // members: Members[]
 
     // // Users-Boards : 1:N관계
-    // @OneToMany(type => Boards, board => Boards.user, {eager: true})
+    // @OneToMany(() => Boards, boards => boards.users)
     // boards: Boards[]
 
 }
