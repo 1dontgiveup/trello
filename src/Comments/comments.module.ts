@@ -1,16 +1,13 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm'
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Comments } from './comments.entity';
 import { CommentsController } from './comments.controller';
 import { CommentsService } from './comments.service';
-import { CommentsRepository } from './comments.repository';
-// import { MemberModule } from '../Members/members.module';
+import { Repository } from 'typeorm';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([CommentsRepository]),
-    // MemberModule // 인증유저만 게시글 보고 쓸수있음
-  ],
+  imports: [TypeOrmModule.forFeature([Comments])],
   controllers: [CommentsController],
-  providers: [CommentsService]
+  providers: [CommentsService, Repository],
 })
 export class CommentsModule {}
