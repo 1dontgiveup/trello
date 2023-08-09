@@ -8,11 +8,11 @@ import { ListsModule } from './Lists/lists.module';
 import { MembersModule } from './Members/members.module';
 import { UsersModule } from './Users/users.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { AuthMiddleware } from "../src/auth/auth.middlewares";
+import { AuthMiddleware } from '../src/auth/auth.middlewares';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot(typeORMConfig),
+    TypeOrmModule.forRootAsync({ useFactory: () => typeORMConfig }),
     BoardsModule,
     CardsModule,
     CommentsModule,
@@ -22,3 +22,4 @@ import { AuthMiddleware } from "../src/auth/auth.middlewares";
   ],
 })
 export class AppModule {}
+console.log(typeORMConfig, '앱에서 확인');
