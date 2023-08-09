@@ -1,5 +1,6 @@
-import { BaseEntity, CreateDateColumn, UpdateDateColumn, ManyToOne, Column, Entity, Unique, OneToMany, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, JoinColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, Column, Entity, Unique, OneToMany, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 import { Cards } from '../Cards/cards.entity'
+import { Users } from "src/Users/users.entity";
 
 @Entity()
 @Unique(['commentId']) // commentId 고유값 지정
@@ -12,7 +13,7 @@ export class Comments extends BaseEntity{
     cid: number;
 
     @Column()
-    mid: number;
+    uid: number;
     
     @Column()
     comment: string;
@@ -23,8 +24,11 @@ export class Comments extends BaseEntity{
     @UpdateDateColumn()
     updatedAt: Date;
 
-    // 관계설정 따로 수정해주셔야 합니다.
     // // Comments-Cards : N:1 관계
     // @ManyToOne(type => Cards, cards => cards.comments, {eager: false})
     // cards: Cards[]
+
+    @ManyToOne(() => Users, users => users.comments) // user.comments와 연결
+    @JoinColumn({ name: 'uid' })
+    users: Users;
 }
