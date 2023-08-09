@@ -13,6 +13,7 @@ import { AuthMiddleware } from "../src/auth/auth.middlewares";
 @Module({
   imports: [
     TypeOrmModule.forRoot(typeORMConfig),
+    ConfigModule.forRoot({isGlobal: true}),
     BoardsModule,
     CardsModule,
     CommentsModule,
