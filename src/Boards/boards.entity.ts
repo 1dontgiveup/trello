@@ -1,15 +1,4 @@
-import {
-  BaseEntity,
-  CreateDateColumn,
-  UpdateDateColumn,
-  ManyToOne,
-  Column,
-  Entity,
-  Unique,
-  OneToMany,
-  PrimaryColumn,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { BaseEntity, CreateDateColumn, UpdateDateColumn, ManyToOne, Column, Entity, Unique, OneToMany, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
 import { Members } from '../Members/members.entity';
 import { Users } from '../Users/users.entity';
 import { Lists } from '../Lists/lists.entity';

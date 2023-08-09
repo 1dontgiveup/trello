@@ -19,12 +19,7 @@ export class BoardsService {
   createBoard(name: string, color: string, explanation: string) {
     return this.boardRepository.insert({ name, color, explanation });
   }
-  async updateBoard(
-    bid: number,
-    name: string,
-    color: string,
-    explanation: string,
-  ) {
+  async updateBoard(bid: number, name: string, color: string, explanation: string) {
     await this.checkBoard(bid);
     this.boardRepository.update(bid, { name, color, explanation });
   }

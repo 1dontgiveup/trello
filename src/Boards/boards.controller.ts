@@ -1,14 +1,4 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  ParseIntPipe,
-  Patch,
-  Post,
-  ValidationPipe,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, ValidationPipe } from '@nestjs/common';
 import { Boards } from './boards.entity';
 import { BoardsService } from './boards.service';
 
@@ -23,21 +13,12 @@ export class BoardsController {
 
   @Post('/board')
   createBoard(@Body() data: Boards) {
-    return this.boardService.createBoard(
-      data.name,
-      data.color,
-      data.explanation,
-    );
+    return this.boardService.createBoard(data.name, data.color, data.explanation);
   }
 
   @Patch('/board/:bid')
   updateBoard(@Param('bid') bid: number, @Body() data: Boards) {
-    return this.boardService.updateBoard(
-      bid,
-      data.name,
-      data.explanation,
-      data.color,
-    );
+    return this.boardService.updateBoard(bid, data.name, data.explanation, data.color);
   }
 
   @Delete('board/:bid')

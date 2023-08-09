@@ -1,17 +1,4 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  ParseIntPipe,
-  Patch,
-  Put,
-  Post,
-  ValidationPipe,
-  HttpCode,
-  HttpStatus,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Put, Post, ValidationPipe, HttpCode, HttpStatus } from '@nestjs/common';
 import { CommentsService } from './comments.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
@@ -31,31 +18,15 @@ export class CommentsController {
 
   // 2. 댓글 1개 조회: GET localhost:3000/api/board/:bid/card/:cid/comment/:commentId
   @Get('/board/:bid/card/:cid/comment/:commentId')
-  async GetCommentById(
-    @Param('bid') bid: number,
-    @Param('cid') cid: number,
-    @Param('commentId') commentId: number,
-  ) {
-    const comment = await this.commentsService.GetCommentById(
-      bid,
-      cid,
-      commentId,
-    );
+  async GetCommentById(@Param('bid') bid: number, @Param('cid') cid: number, @Param('commentId') commentId: number) {
+    const comment = await this.commentsService.GetCommentById(bid, cid, commentId);
     return comment;
   }
 
   // 3. 댓글 생성 POST : localhost:3000/api/board/:bid/card/:cid/comment
   @Post('/board/:bid/card/:cid/comment')
-  async createComment(
-    @Param('bid') bid: number,
-    @Param('cid') cid: number,
-    @Body() createCommentDto: CreateCommentDto,
-  ) {
-    const comment = await this.commentsService.createComment(
-      bid,
-      cid,
-      createCommentDto,
-    );
+  async createComment(@Param('bid') bid: number, @Param('cid') cid: number, @Body() createCommentDto: CreateCommentDto) {
+    const comment = await this.commentsService.createComment(bid, cid, createCommentDto);
     if (comment) {
       // @HttpCode(HttpStatus.CREATED)
       return { message: '댓글이 성공적으로 생성되었습니다.' };
@@ -70,12 +41,7 @@ export class CommentsController {
     @Param('commentId') commentId: number,
     @Body() updateCommentDto: UpdateCommentDto,
   ) {
-    const update = await this.commentsService.updateComment(
-      bid,
-      cid,
-      commentId,
-      updateCommentDto,
-    );
+    const update = await this.commentsService.updateComment(bid, cid, commentId, updateCommentDto);
     if (update) {
       // @HttpCode(HttpStatus.OK)
       return { message: '댓글이 성공적으로 수정되었습니다.' };
@@ -84,11 +50,7 @@ export class CommentsController {
 
   // 5. 댓글 삭제 DELETE : localhost:3000/api/board/:bid/card/:cid/comment/:commentId
   @Delete('/board/:bid/card/:cid/comment/:commentId')
-  async deleteComment(
-    @Param('bid') bid: number,
-    @Param('cid') cid: number,
-    @Param('commentId') commentId: number,
-  ) {
+  async deleteComment(@Param('bid') bid: number, @Param('cid') cid: number, @Param('commentId') commentId: number) {
     await this.commentsService.deleteComment(bid, cid, commentId);
     return { message: '댓글이 정상적으로 삭제되었습니다.' };
   }

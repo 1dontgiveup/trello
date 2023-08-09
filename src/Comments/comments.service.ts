@@ -1,9 +1,4 @@
-import {
-  Injectable,
-  NotFoundException,
-  UnauthorizedException,
-  BadRequestException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException, UnauthorizedException, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Comments } from './comments.entity';
@@ -37,11 +32,7 @@ export class CommentsService {
   }
 
   // 2. < 댓글 1개 조회 >
-  async GetCommentById(
-    bid: number,
-    cid: number,
-    commentId: number,
-  ): Promise<Comments> {
+  async GetCommentById(bid: number, cid: number, commentId: number): Promise<Comments> {
     // params 체크
     if (!bid || bid == undefined) {
       throw new NotFoundException('board ID가 존재하지 않습니다.');
@@ -58,11 +49,7 @@ export class CommentsService {
   }
 
   // 3. < 댓글 생성 >
-  async createComment(
-    bid: number,
-    cid: number,
-    createCommentDto: CreateCommentDto,
-  ): Promise<Comments> {
+  async createComment(bid: number, cid: number, createCommentDto: CreateCommentDto): Promise<Comments> {
     try {
       const { comment } = createCommentDto;
       // params 체크
@@ -85,12 +72,7 @@ export class CommentsService {
   }
 
   // 4. < 댓글 수정 >
-  async updateComment(
-    bid: number,
-    cid: number,
-    commentId: number,
-    updateCommentDto: UpdateCommentDto,
-  ): Promise<Comments | undefined> {
+  async updateComment(bid: number, cid: number, commentId: number, updateCommentDto: UpdateCommentDto): Promise<Comments | undefined> {
     try {
       const { comment } = updateCommentDto;
 
@@ -124,11 +106,7 @@ export class CommentsService {
   }
 
   // 5. < 댓글 삭제 >
-  async deleteComment(
-    bid: number,
-    cid: number,
-    commentId: number,
-  ): Promise<void> {
+  async deleteComment(bid: number, cid: number, commentId: number): Promise<void> {
     try {
       // params 체크
       if (!bid || bid == undefined) {
@@ -146,9 +124,7 @@ export class CommentsService {
 
       const remove = await this.commentsRepository.delete(commentId);
       if (remove.affected === 0) {
-        throw new NotFoundException(
-          `해당 댓글이 조회되지 않습니다. commentId: ${commentId}`,
-        );
+        throw new NotFoundException(`해당 댓글이 조회되지 않습니다. commentId: ${commentId}`);
       }
     } catch (error) {
       console.log(error);
