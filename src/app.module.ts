@@ -7,11 +7,10 @@ import { CommentsModule } from './Comments/comments.module';
 import { ListsModule } from './Lists/lists.module';
 import { MembersModule } from './Members/members.module';
 import { UsersModule } from './Users/users.module';
-import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot(typeORMConfig),
+    TypeOrmModule.forRootAsync({ useFactory: () => typeORMConfig }),
     BoardsModule,
     CardsModule,
     CommentsModule,
@@ -21,3 +20,4 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
   ],
 })
 export class AppModule {}
+console.log(typeORMConfig, '앱에서 확인');
