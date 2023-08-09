@@ -10,7 +10,7 @@ import { UpdateDto } from './dto/update.dto';
 export class UsersController {
     constructor (private readonly usersService: UsersService) {}
 
-    // 1. 회원가입 Post: localhost:3000/api/signup : 
+    // 1. 회원가입 Post: localhost:3000/api/signup
     @Post('/signup')
     async signup(@Body() authCredentialsDto: AuthCredentialsDto) {
         return await this.usersService.signup(authCredentialsDto);

@@ -21,7 +21,7 @@ export class UsersService{
 
 
   // < 1. 회원가입 >
-  public async signup(signupData: AuthCredentialsDto): Promise<Users> {
+  async signup(signupData: AuthCredentialsDto): Promise<Users> {
     try{
     const { email, nickname, password, confirmPassword } = signupData;
     const existUser = await this.getUserByEmail(email)
@@ -50,7 +50,7 @@ export class UsersService{
   }
 
   // 이메일 중복검사
-  public async getUserByEmail(email: string): Promise<Users | undefined> {
+  async getUserByEmail(email: string): Promise<Users | undefined> {
     return this.usersRepository.findOne({where: {email, deletedAt: null}});
   }
   // hash저장된 비밀번호를 입력한 비밀번호와 비교
@@ -59,12 +59,12 @@ export class UsersService{
   }
 
   // < 2. 로그인 >
-  public async login(userDto: UserDto): Promise<{accessToken: string}> {
+  async login(userDto: UserDto): Promise<{accessToken: string}> {
     const {email, password} = userDto;
     const user = await this.usersRepository.findOne({
       where: {email, deletedAt: null},
     });
-    
+    console.log("user", user)
     // 유효성 검사
     if(user.email !== email){
       throw new UnauthorizedException('이메일이 일치하지 않습니다.')
@@ -73,7 +73,7 @@ export class UsersService{
     //   throw new UnauthorizedException('비밀번호가 일치하지 않습니다.')
     // }
 
-    // 로그인 성공 시 유저 토큰 생성 (Secret + Payload)
+    // user가 존재하고 비밀번호가 일치할 경우 로그인 성공 -> 토큰 생성 (Secret + Payload)
     if(user && (await bcrypt.compare(password, user.password))){
       const payload = { email: user.email }
       const accessToken = await this.jwtService.signAsync(payload);
@@ -85,7 +85,7 @@ export class UsersService{
   
 
   // < 3. 회원정보 조회 >
-  public async getUserById(uid: number): Promise<Users | undefined> {
+  async getUserById(uid: number): Promise<Users | undefined> {
     const user = this.usersRepository.findOne({where: {uid, deletedAt: null}});
     if(!user){
       throw new NotFoundException('회원조회에 실패하였습니다.')
@@ -95,8 +95,7 @@ export class UsersService{
 
 
   // < 4. 회원정보 수정 >
-  
-  public async updateUser(uid: number, updateDto: UpdateDto): Promise<Users>{
+  async updateUser(uid: number, updateDto: UpdateDto): Promise<Users>{
 try{
   const { password, newPassword, newNickname } = updateDto;
   const user = await this.usersRepository.findOne({where: {uid, deletedAt: null}});

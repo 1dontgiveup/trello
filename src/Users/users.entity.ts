@@ -1,6 +1,7 @@
 import { BaseEntity, Column, Entity, Unique, Index, DeleteDateColumn, CreateDateColumn, UpdateDateColumn, OneToMany, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 import { Members } from '../Members/members.entity'
 import { Boards } from '../Boards/boards.entity'
+import { Comments } from "src/Comments/comments.entity";
 
 @Entity()
 @Unique(['nickname']) // userId 고유값 지정
@@ -40,4 +41,7 @@ export class Users extends BaseEntity{
     // @OneToMany(() => Boards, boards => boards.users)
     // boards: Boards[]
 
+    // Users-Comments : 1: N 관계
+    @OneToMany(() => Comments, comments => comments.users)
+    comments: Comments[]; 
 }
