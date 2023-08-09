@@ -1,16 +1,24 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm'
+import { ConfigModule, ConfigService } from "@nestjs/config";
+import { JwtModule } from "@nestjs/jwt";
+import { JwtConfigService } from 'src/configs/jwt.config.service';
 import { UsersController } from './users.controller';
+import { Repository } from 'typeorm';
 import { UsersService } from './users.service';
-// import { UsersRepository } from './users.repository';
-// import { MemberModule } from '../Members/members.module';
+import { Users } from './users.entity';
 
 @Module({
   imports: [
-    // TypeOrmModule.forFeature([UsersRepository]),
-    // MemberModule // 인증유저만 게시글 보고 쓸수있음
+    TypeOrmModule.forFeature([Users]),
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      useClass: JwtConfigService,
+      inject: [ConfigService],
+    })
   ],
   controllers: [UsersController],
-  providers: [UsersService]
+  providers: [UsersService, Repository],
+  exports: [UsersService, TypeOrmModule],
 })
 export class UsersModule {}

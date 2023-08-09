@@ -1,4 +1,4 @@
-import { BaseEntity, CreateDateColumn, ManyToOne, Column, Entity, Unique, OneToMany, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, CreateDateColumn, UpdateDateColumn, ManyToOne, Column, Entity, Unique, OneToMany, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 import { Members } from '../Members/members.entity'
 import { Users } from '../Users/users.entity'
 import { Lists } from '../Lists/lists.entity'
@@ -25,7 +25,7 @@ export class Boards extends BaseEntity{
     @CreateDateColumn()
     createdAt: Date;
 
-    @CreateDateColumn()
+    @UpdateDateColumn()
     updatedAt: Date;
 
     // 관계설정 따로 수정해주셔야 합니다.
