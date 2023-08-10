@@ -1,4 +1,4 @@
-import { Module, MiddlewareConsumer, NestModule  } from '@nestjs/common';
+import { Module, MiddlewareConsumer, NestModule, RequestMethod } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeORMConfig } from './configs/typeorm.config';
 import { BoardsModule } from './Boards/boards.module';
@@ -9,8 +9,8 @@ import { MembersModule } from './Members/members.module';
 import { UsersModule } from './Users/users.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthMiddleware } from '../src/auth/auth.middlewares';
-import { JwtModule, JwtService } from "@nestjs/jwt";
-import { JwtConfigService } from "./configs/jwt.config.service";
+import { JwtModule, JwtService } from '@nestjs/jwt';
+import { JwtConfigService } from './configs/jwt.config.service';
 import { UsersService } from './Users/users.service';
 import { UsersController } from './Users/users.controller';
 
@@ -30,9 +30,15 @@ import { UsersController } from './Users/users.controller';
     MembersModule,
     UsersModule,
   ],
-  providers: [UsersService],
+  providers: [UsersService, AuthMiddleware],
   exports: [UsersService],
   controllers: [UsersController],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(AuthMiddleware).forRoutes({ path: '/api/member', method: RequestMethod.POST });
+  }
+}
 console.log(typeORMConfig, '앱에서 확인');
+
+AuthMiddleware;
